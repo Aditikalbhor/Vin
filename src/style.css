@@ -330,3 +330,25 @@ code {
     pointer-events: none;
     z-index: 2;
 }
+.visualization-section {
+    width: 100%;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.visualization-section h2 {
+    margin-bottom: 20px;
+}
+
+#three-container {
+    width: 100%;
+    max-width: 800px;
+    height: 500px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+#three-container canvas {
+    display: block;
+}

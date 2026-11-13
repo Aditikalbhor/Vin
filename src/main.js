@@ -16,6 +16,10 @@ import {
     getHandMovement
 } from './gestures/handMovement.js';
 
+import { initializeScene } from './visualization/scene.js';
+import { createTestSphere } from './visualization/object.js';
+import { rotateObject } from './visualization/controls.js';
+
 document.querySelector('#app').innerHTML = `
   <header class="navbar">
     <div class="logo">VIN<span>.</span></div>
@@ -59,7 +63,10 @@ document.querySelector('#app').innerHTML = `
         </article>
       </div>
     </section>
-
+    <section class="visualization-section">
+        <h2>3D Exploration</h2>
+       <div id="three-container"></div>
+    </section>
     <section class="camera-section">
       <div class="camera-container">
         <video id="camera-feed" autoplay playsinline muted></video>
@@ -77,6 +84,12 @@ document.querySelector('#app').innerHTML = `
     <span>Built with curiosity.</span>
   </footer>
 `;
+
+const threeContainer = document.querySelector('#three-container');
+
+const { scene } = initializeScene(threeContainer);
+
+const sphere = createTestSphere(scene);
 
 async function startApp() {
     const video = document.querySelector('#camera-feed');
@@ -125,6 +138,10 @@ async function startHandTracking() {
 
                 const position = getHandPosition(hand);
                 const movement = getHandMovement(hand, index);
+
+if (index === 0) {
+    rotateObject(sphere, movement.deltaX, movement.deltaY);
+}
                 detectedGestures.push(
                   `Hand ${index + 1}: ${gesture} | ` +
                   `X: ${position.x.toFixed(2)} | ` +
