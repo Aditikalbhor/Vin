@@ -1,6 +1,6 @@
 import { initializeCamera } from './gestures/camera.js'
 import './style.css'
-
+import { detectPinch } from './gestures/gestureRecognition.js';
 import { drawLandmarks } from './gestures/drawLandmarks.js'
 
 import {
@@ -104,8 +104,14 @@ async function startHandTracking() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             if (results.landmarks.length > 0) {
-            results.landmarks.forEach(hand => {
-            drawLandmarks(canvas, hand);
+            results.landmarks.forEach((hand, index) => {
+              drawLandmarks(canvas, hand);
+              const isPinching = detectPinch(hand);
+
+              console.log(
+                `Hand ${index + 1}:`,
+                isPinching ? "PINCH" : "OPEN"
+              );
             });
           }
         }
