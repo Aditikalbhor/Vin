@@ -9,3 +9,28 @@ export function detectPinch(landmarks) {
 
     return distance < 0.05;
 }
+export function detectOpenPalm(landmarks) {
+    const fingers = [
+        [8, 6],   // Index
+        [12, 10], // Middle
+        [16, 14], // Ring
+        [20, 18]  // Pinky
+    ];
+
+    return fingers.every(([tip, pip]) =>
+        landmarks[tip].y < landmarks[pip].y
+    );
+}
+
+export function detectFist(landmarks) {
+    const fingers = [
+        [8, 6],
+        [12, 10],
+        [16, 14],
+        [20, 18]
+    ];
+
+    return fingers.every(([tip, pip]) =>
+        landmarks[tip].y > landmarks[pip].y
+    );
+}
