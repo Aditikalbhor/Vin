@@ -11,7 +11,10 @@ import {
     initializeHandTracking,
     detectHands
 } from './gestures/handTracking.js'
-
+import {
+    getHandPosition,
+    getHandMovement
+} from './gestures/handMovement.js';
 
 document.querySelector('#app').innerHTML = `
   <header class="navbar">
@@ -120,8 +123,14 @@ async function startHandTracking() {
                     gesture = "FIST";
                 }
 
+                const position = getHandPosition(hand);
+                const movement = getHandMovement(hand, index);
                 detectedGestures.push(
-                    `Hand ${index + 1}: ${gesture}`
+                  `Hand ${index + 1}: ${gesture} | ` +
+                  `X: ${position.x.toFixed(2)} | ` +
+                  `Y: ${position.y.toFixed(2)} | ` +
+                  `dX: ${movement.deltaX.toFixed(3)} | ` +
+                  `dY: ${movement.deltaY.toFixed(3)}`
                 );
             });
 
